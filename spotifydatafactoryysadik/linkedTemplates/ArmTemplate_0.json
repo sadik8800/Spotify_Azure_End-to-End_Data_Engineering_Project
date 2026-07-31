@@ -1,0 +1,79 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "spotifydatafactoryysadik"
+		},
+		"azuresql_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'azuresql'"
+		},
+		"datalake_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'datalake'"
+		},
+		"azuresql_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "azureprojectserversadik.database.windows.net"
+		},
+		"azuresql_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "adminsadik"
+		},
+		"azuresql_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "adminsadiksaifi"
+		},
+		"datalake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storagespotifyy.dfs.core.windows.net/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/azuresql')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('azuresql_properties_typeProperties_server')]",
+					"database": "[parameters('azuresql_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('azuresql_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('azuresql_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/datalake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('datalake_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('datalake_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
