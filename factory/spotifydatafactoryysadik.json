@@ -1,0 +1,15 @@
+{
+	"name": "spotifydatafactoryysadik",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8705535b-522f-49f4-a1af-c29c4dd464a3",
+		"tenantId": "269f4f62-6da9-4d78-9f69-a6b3e88e2c22"
+	}
+}
